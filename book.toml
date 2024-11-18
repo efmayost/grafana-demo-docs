@@ -1,0 +1,6 @@
+[book]
+authors = ["Eli Mayost"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Grafana Demo"
