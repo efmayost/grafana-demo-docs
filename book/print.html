@@ -1,0 +1,514 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Grafana Demo</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/css/style.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Grafana Demo</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="gtd---global-terrorism-database"><a class="header" href="#gtd---global-terrorism-database">GTD - Global Terrorism Database</a></h2>
+<h3 id="context"><a class="header" href="#context">Context</a></h3>
+<p>An open-source database including information on terrorist attacks around the world from 1970 through 2017. It includes information on more than 180,000 terrorist events.</p>
+<p>The database is maintained by researchers at the National Consortium for the Study of Terrorism and Responses to Terrorism (START), headquartered at the University of Maryland.</p>
+<p>Definition of terrorism:</p>
+<p>"The threatened or actual use of illegal force and violence by a non-state actor to attain a political, economic, religious, or social goal through fear, coercion, or intimidation."</p>
+<h3 id="content"><a class="header" href="#content">Content</a></h3>
+<p>Geography: Worldwide</p>
+<p>Time period: 1970-2017, except 1993 (files were lost)</p>
+<p>Unit of analysis: Attack</p>
+<p>Variables: more than 100 variables on location, tactics, perpetrators, targets, and outcomes.</p>
+<p>For clarity, only the following are used in the dashboard:</p>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>type</th></tr></thead><tbody>
+<tr><td>attacktype1_txt</td><td>text</td></tr>
+<tr><td>city</td><td>text</td></tr>
+<tr><td>country_txt</td><td>text</td></tr>
+<tr><td>eventid</td><td>uuid</td></tr>
+<tr><td>gname</td><td>text</td></tr>
+<tr><td>imonth</td><td>number</td></tr>
+<tr><td>individual</td><td>boolean</td></tr>
+<tr><td>iyear</td><td>number</td></tr>
+<tr><td>nkill</td><td>number</td></tr>
+<tr><td>region_txt</td><td>text</td></tr>
+<tr><td>success</td><td>boolean</td></tr>
+<tr><td>suicide</td><td>boolean</td></tr>
+<tr><td>weaptype1_txt</td><td>text</td></tr>
+</tbody></table>
+</div>
+<p>See the <a href="https://www.start.umd.edu/gtd/downloads/Codebook.pdf">GTD Codebook</a> for important details on data collection methodology, definitions, and coding schema.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<h3 id="tools-needed"><a class="header" href="#tools-needed">Tools needed</a></h3>
+<ul>
+<li>Docker</li>
+<li>docker-compose</li>
+<li><a href="https://taskfile.dev/">Task</a></li>
+</ul>
+<h3 id="install"><a class="header" href="#install">Install</a></h3>
+<ol>
+<li>Clone the repository:</li>
+</ol>
+<pre><code class="language-bash">git clone git@github.com:efmayost/grafana-demo.git
+</code></pre>
+<ol start="2">
+<li>Launch the required containers:</li>
+</ol>
+<pre><code class="language-bash">docker-compose up
+</code></pre>
+<ol start="3">
+<li>Create a .env file with the following:</li>
+</ol>
+<pre><code class="language-bash">USERNAME=elastic
+PASSWORD='XXXXXXXXXXXXXX'
+INDEX_NAME= gtd
+</code></pre>
+<ol start="4">
+<li>Change the elastic user's password:</li>
+</ol>
+<pre><code class="language-bash">docker exec -it elasticsearch elasticsearch-reset-password -u elastic
+</code></pre>
+<ol start="5">
+<li>Create the elasticesearch gtd index:</li>
+</ol>
+<pre><code class="language-bash">task create-index:run
+</code></pre>
+<ol start="6">
+<li>Add the processors for that index:</li>
+</ol>
+<pre><code class="language-bash">task add-processors:run
+</code></pre>
+<ol start="7">
+<li>Ingest the data:</li>
+</ol>
+<pre><code class="language-bash">task ingest:run
+</code></pre>
+<ol start="8">
+<li>Verify the total docs count (shoul be ~ 180K):</li>
+</ol>
+<pre><code class="language-bash">task count-docs:run
+</code></pre>
+<ol start="9">
+<li>Copy the sqlite database file to grafana container:</li>
+</ol>
+<pre><code class="language-bash">docker cp data/gtd.sqlite grafana:/
+</code></pre>
+<h3 id="grafana-ui"><a class="header" href="#grafana-ui">Grafana UI</a></h3>
+<p>In your browser open <a href="http://localhost:3000">UI</a></p>
+<p>Username: admin Password: admin</p>
+<p>You can skip updating the password.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="data-sources"><a class="header" href="#data-sources">Data sources</a></h2>
+<p>Once inside the UI, we need to declare three data sources, elasticsearch, and sqlite.</p>
+<p>On the left hand side, click on the burger menu icon to expand the menu.</p>
+<p>Under "Connections" click to "Add new connection".</p>
+<h3 id="sqlite"><a class="header" href="#sqlite">SQlite</a></h3>
+<p>Search for slite and click install. Once the plugin is installed, click on "Add new data source", and set the following:</p>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>sqlite</td></tr>
+<tr><td>Path</td><td>/gtq.sqlite</td></tr>
+</tbody></table>
+</div>
+<h3 id="elasticsearch"><a class="header" href="#elasticsearch">Elasticsearch</a></h3>
+<p>Search for elasticsearch. No need to install the plugin as it is there by default. Add a new data source and set the fields:</p>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>elasticsearch</td></tr>
+<tr><td>URL</td><td>https://elasticsearch:9200</td></tr>
+<tr><td>Authentication</td><td>Basic authentication</td></tr>
+<tr><td>User</td><td>elastic</td></tr>
+<tr><td>Password</td><td>The password from installation step 2</td></tr>
+<tr><td>Skip TLS certificate validation</td><td>clicked</td></tr>
+<tr><td>Index name</td><td>gtd</td></tr>
+<tr><td>Time field name</td><td>timestamp</td></tr>
+</tbody></table>
+</div>
+<h3 id="infinity"><a class="header" href="#infinity">Infinity</a></h3>
+<p>Search for slite and click install. Once the plugin is installed, click on "Add new data source", and set the following:</p>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>gtd</td></tr>
+<tr><td>Authentication</td><td>No Auth</td></tr>
+<tr><td>Base URL</td><td>https://raw.githubusercontent.com/elimayost/grafana-demo/refs/heads/master/data/gtd.csv</td></tr>
+<tr><td>Health check</td><td>Enable with same base URL</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="visusalisations"><a class="header" href="#visusalisations">Visusalisations</a></h2>
+<p>We are going to build various visualisations so we can talk about the options used for each.</p>
+<p>The visualisations will be built from the three different data sources.</p>
+<p>They all contain the same data, but they are queried differently.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="quick-glance"><a class="header" href="#quick-glance">Quick glance</a></h2>
+<h3 id="total-events-stat"><a class="header" href="#total-events-stat">Total events (stat)</a></h3>
+<pre><code class="language-sql">select count(*) as total from gtd
+</code></pre>
+<p>Options to discuss:</p>
+<ul>
+<li>Title</li>
+<li>Value options</li>
+<li>Stat styles</li>
+<li>Standard options</li>
+</ul>
+<h3 id="total-killed"><a class="header" href="#total-killed">Total killed</a></h3>
+<pre><code class="language-sql">select sum(nkill) as total from gtd
+</code></pre>
+<p>Options to discuss:</p>
+<ul>
+<li>Colour to emphasize a point</li>
+</ul>
+<h3 id="year-with-maximum-killed"><a class="header" href="#year-with-maximum-killed">Year with maximum killed</a></h3>
+<pre><code class="language-sql">select
+  cast(iyear as decimal),
+  sum(nkill) as total_killed
+from gtd
+group by iyear
+order by total_killed desc
+limit 1;
+</code></pre>
+<p>Options to discuss:</p>
+<ul>
+<li>Value options (one field or all fields)</li>
+<li>Stat styles orientation</li>
+</ul>
+<h3 id="total-regions-stat"><a class="header" href="#total-regions-stat">Total regions (stat)</a></h3>
+<pre><code class="language-sql">select count(distinct region_txt) as total from gtd
+</code></pre>
+<p>Or:</p>
+<pre><code class="language-sql">select region_txt as region, count(region_txt) as total from gtd group by region
+</code></pre>
+<p>Options to discuss:</p>
+<ul>
+<li>The difference between the two in Value options with Distinct Count on region field
+as opposed to First/Last in the first query.</li>
+</ul>
+<h3 id="total-countries-stat"><a class="header" href="#total-countries-stat">Total countries (stat)</a></h3>
+<pre><code class="language-sql">select count(distinct country_txt) as total from gtd
+</code></pre>
+<h3 id="total-groups-stat"><a class="header" href="#total-groups-stat">Total groups (stat)</a></h3>
+<pre><code class="language-sql">select count(distinct(gname)) as total from gtd
+</code></pre>
+<h3 id="total-weapon-types-stat"><a class="header" href="#total-weapon-types-stat">Total weapon types (stat)</a></h3>
+<pre><code class="language-sql">select count(distinct(weaptype1_txt)) as total from gtd
+</code></pre>
+<h3 id="total-attack-types-stat"><a class="header" href="#total-attack-types-stat">Total attack types (stat)</a></h3>
+<pre><code class="language-sql">select count(distinct(attacktype1_txt)) as total from gtd
+</code></pre>
+<h3 id="success-rate-stat"><a class="header" href="#success-rate-stat">Success rate (stat)</a></h3>
+<pre><code class="language-sql">with success as (
+  select cast(count(*) as float) as total from gtd where success=1
+)
+
+select 100 * success.total / count(*) as rate from success, gtd
+</code></pre>
+<p>To discuss:</p>
+<ul>
+<li>Cast on rate to get a more accurate result with decimal.</li>
+<li>Standard options unit - only adds the percent sign (i.e needs to be multiplied by 100 in query)</li>
+</ul>
+<h3 id="suicide-rate-stat"><a class="header" href="#suicide-rate-stat">Suicide rate (stat)</a></h3>
+<pre><code class="language-sql">with suicide as (
+  select cast(count(*) as float) as total from gtd where suicide=1
+)
+
+select 100 * suicide.total / count(*) as rate from suicide, gtd
+</code></pre>
+<h3 id="individual-rate-stat"><a class="header" href="#individual-rate-stat">Individual rate (stat)</a></h3>
+<pre><code class="language-sql">with individual as (
+  select cast(count(*) as float) as total from gtd where individual=1
+)
+
+select 100 * individual.total / count(*) as rate from individual, gtd
+</code></pre>
+<p>To discuss adding a row for grouping multiple panels</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="total-events---by-time"><a class="header" href="#total-events---by-time">Total events - by time</a></h2>
+<h3 id="by-year-bar"><a class="header" href="#by-year-bar">By year (bar)</a></h3>
+<pre><code class="language-sql">select iyear as year, count(*) as total from gtd group by iyear
+</code></pre>
+<p>Options to discuss:</p>
+<ul>
+<li>X Axis label rotation</li>
+<li>Tooltip</li>
+<li>Legend</li>
+<li>Overrides</li>
+</ul>
+<h3 id="by-month-bar"><a class="header" href="#by-month-bar">By month (bar)</a></h3>
+<pre><code class="language-sql">select cast(imonth as decimal) as month, count(*) as total from gtd where imonth!=0 group by month
+</code></pre>
+<p>Or:</p>
+<pre><code class="language-sql">select
+  case imonth
+    when 1 then 'Jan'
+    when 2 then 'Feb'
+    when 3 then 'Mar'
+    when 4 then 'Apr'
+    when 5 then 'May'
+    when 6 then 'Jun'
+    when 7 then 'Jul'
+    when 8 then 'Aug'
+    when 9 then 'Sep'
+    when 10 then 'Oct'
+    when 11 then 'Nov'
+    when 12 then 'Dec'
+  end as month,
+  count(*) as total
+from gtd
+where imonth!=0
+group by month
+order by cast(imonth as decimal)
+</code></pre>
+<p>To discuss:</p>
+<ul>
+<li>The difference between filtering in the query and Transform Data (transform happening BEFORE visualisation)</li>
+<li>Value mappings as an easier way than case/then in sql query</li>
+<li>The difference between the types of imonth and month and the need for casting for ordering correctly.</li>
+</ul>
+<h3 id="by-weekday-table"><a class="header" href="#by-weekday-table">By weekday (table)</a></h3>
+<pre><code class="language-sql">select case strftime('%w', printf('%04d-%02d-%02d', iyear, imonth, iday))
+           when '1' then 1
+           when '2' then 2
+           when '3' then 3
+           when '4' then 4
+           when '5' then 5
+           when '6' then 6
+           when '0' then 7
+       end as weekday_name, count(*) as total
+from gtd
+where imonth!=0 and iday!=0
+group by weekday_name
+order by weekday_name
+</code></pre>
+<p>To discuss:</p>
+<ul>
+<li>Explain why we are using case/then here</li>
+<li>Cell options gauge - Retro LCD</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="total-events---by-attack-type"><a class="header" href="#total-events---by-attack-type">Total events - by attack type</a></h2>
+<p>To discuss:</p>
+<ul>
+<li>Time series vs terms grouping</li>
+<li>Timestamp interval in query (e.g 1y)</li>
+<li>Ability to zoom/select with the mouse</li>
+<li>Legend filtering</li>
+<li>Readability of the graph compared to the repeat option</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="total-events---by-weapon-type"><a class="header" href="#total-events---by-weapon-type">Total events - by weapon type</a></h2>
+<pre><code class="language-UQL">parse-csv
+| where "weaptype1_txt" in (${weapon:singlequote})
+| project "iyear", "weaptype1_txt"
+| summarize count() by "iyear"
+</code></pre>
+<p>To discuss:</p>
+<ul>
+<li>The repeat option</li>
+<li>Thresholds</li>
+<li>Filtering with the filter hides all other repeated panels</li>
+<li>Can only edit the first panel as the rest are dependant on it</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="raw-data"><a class="header" href="#raw-data">Raw data</a></h2>
+<p>To discuss:</p>
+<ul>
+<li>Organize/Hide/Rename fields (boolean with ?)</li>
+<li>Value mapping for booleans</li>
+<li>Overrides created automatically by resizing column width</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

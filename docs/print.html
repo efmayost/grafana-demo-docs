@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/css/style.css">
 
 
         <!-- Provide site root to javascript -->
@@ -247,30 +248,33 @@ INDEX_NAME= gtd
 <p>Under "Connections" click to "Add new connection".</p>
 <h3 id="sqlite"><a class="header" href="#sqlite">SQlite</a></h3>
 <p>Search for slite and click install. Once the plugin is installed, click on "Add new data source", and set the following:</p>
-<ul>
-<li>Name: sqlite Path: /gtq.sqlite</li>
-</ul>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>sqlite</td></tr>
+<tr><td>Path</td><td>/gtq.sqlite</td></tr>
+</tbody></table>
+</div>
 <h3 id="elasticsearch"><a class="header" href="#elasticsearch">Elasticsearch</a></h3>
 <p>Search for elasticsearch. No need to install the plugin as it is there by default. Add a new data source and set the fields:</p>
-<ul>
-<li>Name: elasticsearch</li>
-<li>URL: https://elasticsearch:9200</li>
-<li>Authentication: Basic authentication</li>
-<li>User: elastic</li>
-<li>Password: The password from installation step 2</li>
-<li>Skip TLS certificate validation: clicked</li>
-<li>Index name: gtd</li>
-<li>Time field name: timestamp</li>
-</ul>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>elasticsearch</td></tr>
+<tr><td>URL</td><td>https://elasticsearch:9200</td></tr>
+<tr><td>Authentication</td><td>Basic authentication</td></tr>
+<tr><td>User</td><td>elastic</td></tr>
+<tr><td>Password</td><td>The password from installation step 2</td></tr>
+<tr><td>Skip TLS certificate validation</td><td>clicked</td></tr>
+<tr><td>Index name</td><td>gtd</td></tr>
+<tr><td>Time field name</td><td>timestamp</td></tr>
+</tbody></table>
+</div>
 <h3 id="infinity"><a class="header" href="#infinity">Infinity</a></h3>
 <p>Search for slite and click install. Once the plugin is installed, click on "Add new data source", and set the following:</p>
-<ul>
-<li>Name: gtd</li>
-<li>Authentication: No Auth</li>
-<li>Base URL: https://raw.githubusercontent.com/elimayost/grafana-demo/refs/heads/master/data/gtd.csv</li>
-<li>Health check: Enable with same base URL</li>
-</ul>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="visusalisations"><a class="header" href="#visusalisations">Visusalisations</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>gtd</td></tr>
+<tr><td>Authentication</td><td>No Auth</td></tr>
+<tr><td>Base URL</td><td>https://raw.githubusercontent.com/elimayost/grafana-demo/refs/heads/master/data/gtd.csv</td></tr>
+<tr><td>Health check</td><td>Enable with same base URL</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="visusalisations"><a class="header" href="#visusalisations">Visusalisations</a></h2>
 <p>We are going to build various visualisations so we can talk about the options used for each.</p>
 <p>The visualisations will be built from the three different data sources.</p>
 <p>They all contain the same data, but they are queried differently.</p>
