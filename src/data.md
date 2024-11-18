@@ -23,6 +23,7 @@ Variables: more than 100 variables on location, tactics, perpetrators, targets, 
 
 For clarity, only the following are used in the dashboard:
 
+
 | name            | type      |
 | --------------- | --------- |
 | attacktype1_txt | text      |
@@ -38,5 +39,6 @@ For clarity, only the following are used in the dashboard:
 | success         | boolean   |
 | suicide         | boolean   |
 | weaptype1_txt   | text      |
+
 
 See the [GTD Codebook](https://www.start.umd.edu/gtd/downloads/Codebook.pdf) for important details on data collection methodology, definitions, and coding schema.
