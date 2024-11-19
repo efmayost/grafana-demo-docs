@@ -154,7 +154,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="data-sources"><a class="header" href="#data-sources">Data sources</a></h2>
-<p>Once inside the UI, we need to declare three data sources, elasticsearch, and sqlite.</p>
+<p>Once inside the UI, we need to declare four data sources, elasticsearch, sqlite, infinity from github, and infinity from s3.</p>
 <p>On the left hand side, click on the burger menu icon to expand the menu.</p>
 <p>Under "Connections" click to "Add new connection".</p>
 <h3 id="sqlite"><a class="header" href="#sqlite">SQlite</a></h3>
@@ -177,13 +177,25 @@
 <tr><td>Time field name</td><td>timestamp</td></tr>
 </tbody></table>
 </div>
-<h3 id="infinity"><a class="header" href="#infinity">Infinity</a></h3>
-<p>Search for slite and click install. Once the plugin is installed, click on "Add new data source", and set the following:</p>
+<h3 id="infinity---github"><a class="header" href="#infinity---github">Infinity - github</a></h3>
+<p>Search infinity and click install. Once the plugin is installed, click on "Add new data source", and set the following:</p>
 <div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
 <tr><td>Name</td><td>gtd</td></tr>
 <tr><td>Authentication</td><td>No Auth</td></tr>
 <tr><td>Base URL</td><td>https://raw.githubusercontent.com/elimayost/grafana-demo/refs/heads/master/data/gtd.csv</td></tr>
 <tr><td>Health check</td><td>Enable with same base URL</td></tr>
+</tbody></table>
+</div>
+<h3 id="infinity---s3"><a class="header" href="#infinity---s3">Infinity - S3</a></h3>
+<p>Click on "Add new data source", and set the following:</p>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>value</th></tr></thead><tbody>
+<tr><td>Name</td><td>cleversafe</td></tr>
+<tr><td>Auth type</td><td>AWS</td></tr>
+<tr><td>Service</td><td>s3</td></tr>
+<tr><td>Access Key</td><td></td></tr>
+<tr><td>Secret Key</td><td></td></tr>
+<tr><td>Allowed hosts</td><td>https://s3.futureplc.engineering</td></tr>
+<tr><td>Base URL</td><td>https://s3.futureplc.engineering</td></tr>
 </tbody></table>
 </div>
                     </main>
